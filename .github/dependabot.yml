@@ -4,10 +4,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    reviewers:
-      - "Shopify/infrasec"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every week
+      interval: "weekly"
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
       interval: "weekly"

@@ -1,7 +1,4 @@
-# CloudFlare Prometheus exporter
-[<img src="ll-logo.png">](https://lablabs.io/)
-
-We help companies build, run, deploy and scale software and infrastructure by embracing the right technologies and principles. Check out our website at https://lablabs.io/
+# Cloudflare Prometheus exporter
 
 ---
 
@@ -41,20 +38,20 @@ To authenticate this way, set both `CF_API_KEY` and `CF_API_EMAIL`.
 ## Configuration
 The exporter can be configured using env variables or command flags.
 
-| **KEY** | **description** |
-|-|-|
-| `CF_API_EMAIL` |  user email (see https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys) |
-| `CF_API_KEY` |  API key associated with email (`CF_API_EMAIL` is required if this is set)|
-| `CF_API_TOKEN` |  API authentication token (recommended before API key + email. Version 0.0.5+. see https://developers.cloudflare.com/analytics/graphql-api/getting-started/authentication/api-token-auth) |
-| `CF_ZONES` |  (Optional) cloudflare zones to export, comma delimited list of zone ids. If not set, all zones from account are exported |
-| `CF_EXCLUDE_ZONES` |  (Optional) cloudflare zones to exclude, comma delimited list of zone ids. If not set, no zones from account are excluded |
-| `FREE_TIER` | (Optional) scrape only metrics included in free plan. Accepts `true` or `false`, default `false`. |
-| `LISTEN` |  listen on addr:port (default `:8080`), omit addr to listen on all interfaces |
-| `METRICS_PATH` |  path for metrics, default `/metrics` |
-| `SCRAPE_DELAY` | scrape delay in seconds, default `300` |
-| `CF_BATCH_SIZE` | cloudflare request zones batch size (1 - 10), default `10` |
-| `METRICS_DENYLIST` | (Optional) cloudflare-exporter metrics to not export, comma delimited list of cloudflare-exporter metrics. If not set, all metrics are exported |
-| `ZONE_<NAME>` |  `DEPRECATED since 0.0.5` (optional) Zone ID. Add zones you want to scrape by adding env vars in this format. You can find the zone ids in Cloudflare dashboards. |
+| **KEY**            | **description**                                                                                                                                                                          |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `CF_API_EMAIL`     | user email (see https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys)                                                                                 |
+| `CF_API_KEY`       | API key associated with email (`CF_API_EMAIL` is required if this is set)                                                                                                                |
+| `CF_API_TOKEN`     | API authentication token (recommended before API key + email. Version 0.0.5+. see https://developers.cloudflare.com/analytics/graphql-api/getting-started/authentication/api-token-auth) |
+| `CF_ZONES`         | (Optional) cloudflare zones to export, comma delimited list of zone ids. If not set, all zones from account are exported                                                                 |
+| `CF_EXCLUDE_ZONES` | (Optional) cloudflare zones to exclude, comma delimited list of zone ids. If not set, no zones from account are excluded                                                                 |
+| `FREE_TIER`        | (Optional) scrape only metrics included in free plan. Accepts `true` or `false`, default `false`.                                                                                        |
+| `LISTEN`           | listen on addr:port (default `:8080`), omit addr to listen on all interfaces                                                                                                             |
+| `METRICS_PATH`     | path for metrics, default `/metrics`                                                                                                                                                     |
+| `SCRAPE_DELAY`     | scrape delay in seconds, default `300`                                                                                                                                                   |
+| `CF_BATCH_SIZE`    | cloudflare request zones batch size (1 - 10), default `10`                                                                                                                               |
+| `METRICS_DENYLIST` | (Optional) cloudflare-exporter metrics to not export, comma delimited list of cloudflare-exporter metrics. If not set, all metrics are exported                                          |
+| `ZONE_<NAME>`      | `DEPRECATED since 0.0.5` (optional) Zone ID. Add zones you want to scrape by adding env vars in this format. You can find the zone ids in Cloudflare dashboards.                         |
 
 Corresponding flags:
 ```
@@ -110,42 +107,42 @@ Note: `ZONE_<name>` configuration is not supported as flag.
 To deploy the exporter into Kubernetes, we recommend using our manager Helm repository:
 
 ```
-helm repo add cloudflare-exporter https://lablabs.github.io/cloudflare-exporter/
+helm repo add cloudflare-exporter https://woldo-io.github.io/cloudflare-exporter/
 helm install cloudflare-exporter/cloudflare-exporter
 ```
 
 ## Docker
 ### Build
-Images are available at [Github Container Registry](https://github.com/lablabs/cloudflare-exporter/pkgs/container/cloudflare_exporter)
+Images are available at [Github Container Registry](https://github.com/woldo-io/cloudflare-exporter/pkgs/container/cloudflare_exporter)
 
 ```
-docker build -t ghcr.io/lablabs/cloudflare_exporter .
+docker build -t ghcr.io/woldo-io/cloudflare_exporter .
 ```
 
 ### Run
 Authenticating with email + API key:
 ```
-docker run --rm -p 8080:8080 -e CF_API_KEY=${CF_API_KEY} -e CF_API_EMAIL=${CF_API_EMAIL} ghcr.io/lablabs/cloudflare_exporter
+docker run --rm -p 8080:8080 -e CF_API_KEY=${CF_API_KEY} -e CF_API_EMAIL=${CF_API_EMAIL} ghcr.io/woldo-io/cloudflare_exporter
 ```
 
 API token:
 ```
-docker run --rm -p 8080:8080 -e CF_API_TOKEN=${CF_API_TOKEN} ghcr.io/lablabs/cloudflare_exporter
+docker run --rm -p 8080:8080 -e CF_API_TOKEN=${CF_API_TOKEN} ghcr.io/woldo-io/cloudflare_exporter
 ```
 
 Configure zones and listening port:
 ```
-docker run --rm -p 8080:8081 -e CF_API_TOKEN=${CF_API_TOKEN} -e CF_ZONES=zoneid1,zoneid2,zoneid3 -e LISTEN=:8081 ghcr.io/lablabs/cloudflare_exporter
+docker run --rm -p 8080:8081 -e CF_API_TOKEN=${CF_API_TOKEN} -e CF_ZONES=zoneid1,zoneid2,zoneid3 -e LISTEN=:8081 ghcr.io/woldo-io/cloudflare_exporter
 ```
 
 Disable non-free metrics:
 ```
-docker run --rm -p 8080:8080 -e CF_API_TOKEN=${CF_API_TOKEN} -e FREE_TIER=true ghcr.io/lablabs/cloudflare_exporter
+docker run --rm -p 8080:8080 -e CF_API_TOKEN=${CF_API_TOKEN} -e FREE_TIER=true ghcr.io/woldo-io/cloudflare_exporter
 ```
 
 Access help:
 ```
-docker run --rm -p 8080:8080 -i ghcr.io/lablabs/cloudflare_exporter --help
+docker run --rm -p 8080:8080 -i ghcr.io/woldo-io/cloudflare_exporter --help
 ```
 
 ## Contributing and reporting issues
@@ -154,11 +151,9 @@ Feel free to create an issue in this repository if you have questions, suggestio
 ### Validation, linters and pull-requests
 
 We want to provide high quality code and modules. For this reason we are using
-several [pre-commit hooks](.pre-commit-config.yaml) and
 [GitHub Actions workflow](.github/workflows/golangci-lint.yml). A pull-request to the
 master branch will trigger these validations and lints automatically. Please
 check your code before you will create pull-requests. See
-[pre-commit documentation](https://pre-commit.com/) and
 [GitHub Actions documentation](https://docs.github.com/en/actions) for further
 details.
 
